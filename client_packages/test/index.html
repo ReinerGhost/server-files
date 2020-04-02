@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="window">
+        <div class="container">
+            <input type="text" ref="coords" v-show="visible">
+
+            <div class="btn" @click="move()">
+                Переместить игрока
+            </div>
+            <div class="btn" @click="close()">Закрыть</div>
+        </div>
+    </div>
+    <script src="./vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#window',
+            data: {
+                visible: 0,
+            },
+            methods: {
+                move: function() {
+                    
+                    if(this.visible == 1) {
+                       
+                        const coords = this.$refs['coords'].value.split(/[,]+/);
+                        
+                        mp.trigger('movingPlayer',[coords[0],coords[1],coords[2]]);
+                        
+                    }
+                    else this.visible = 1;
+                },
+                close: function() {
+                    mp.trigger('closeActiveBrowser');
+                }
+                
+            }
+        });
+    </script>
+</body>
+</html>
